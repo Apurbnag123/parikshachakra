@@ -2,6 +2,9 @@ FROM dunglas/frankenphp:php8.2.30-bookworm
 
 WORKDIR /app
 
+# Install system dependencies required by Composer
+RUN apt-get update && apt-get install -y git unzip && rm -rf /var/lib/apt/lists/*
+
 # Install required PHP extensions
 RUN install-php-extensions \
     ctype \

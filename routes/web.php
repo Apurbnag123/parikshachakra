@@ -19,7 +19,10 @@ use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
-    return view('index');
+    return response()->json([
+        'message' => 'App is working',
+        'status'  => 'ok',
+    ]);
 });
     Route::get('/index', [MyController::class, 'index']);
 

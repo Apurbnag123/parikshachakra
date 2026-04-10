@@ -18,6 +18,10 @@ use App\Http\Controllers\Student\ClassResourceController as StudentClassResource
 use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\ContactController;
 
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok']);
+});
+
 Route::get('/', function () {
     return view('index');
 });

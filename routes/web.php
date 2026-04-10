@@ -11,7 +11,10 @@ use App\Http\Controllers\Admin\ResultController as AdminResultController;
 use App\Http\Controllers\Admin\StudentController as AdminStudentController;
 use App\Http\Controllers\Admin\BatchController as AdminBatchController;
 use App\Http\Controllers\Admin\ContactQueryController as AdminContactQueryController;
+use App\Http\Controllers\Admin\ClassResourceController as AdminClassResourceController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Student\LiveClassController as StudentLiveClassController;
+use App\Http\Controllers\Student\ClassResourceController as StudentClassResourceController;
 use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\ContactController;
 
@@ -54,6 +57,8 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::resource('notices', AdminNoticeController::class)->except(['show']);
         Route::resource('live-classes', AdminLiveClassController::class)->except(['show']);
+        Route::get('live-classes/{liveClass}/start', [AdminLiveClassController::class, 'start'])->name('live-classes.start');
+        Route::resource('class-resources', AdminClassResourceController::class)->except(['show']);
         Route::resource('results', AdminResultController::class)->except(['show', 'edit', 'update']);
 
         Route::get('/contacts', [AdminContactQueryController::class, 'index'])->name('contacts.index');
@@ -68,6 +73,12 @@ Route::middleware(['auth', 'role:student'])
     ->group(function () {
         Route::get('/', [StudentDashboardController::class, 'index'])->name('dashboard');
         Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/live-classes', [StudentLiveClassController::class, 'index'])->name('live-classes.index');
+        Route::get('/live-classes/{liveClass}/join', [StudentLiveClassController::class, 'join'])->name('live-classes.join');
+
+        Route::get('/class-resources', [StudentClassResourceController::class, 'index'])->name('class-resources.index');
+        Route::get('/class-resources/{classResource}', [StudentClassResourceController::class, 'show'])->name('class-resources.show');
 
         Route::get('/profile', [StudentProfileController::class, 'edit'])->name('profile.edit');
         Route::post('/profile', [StudentProfileController::class, 'update'])->name('profile.update');

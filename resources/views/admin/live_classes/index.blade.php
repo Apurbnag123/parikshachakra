@@ -19,6 +19,7 @@
                         <tr>
                             <th>Title</th>
                             <th>Batch</th>
+                            <th>Type</th>
                             <th>Starts</th>
                             <th>Published</th>
                             <th class="text-end">Action</th>
@@ -29,6 +30,11 @@
                             <tr>
                                 <td class="fw-semibold">{{ $c->title }}</td>
                                 <td>{{ $c->batch?->name ?? 'All' }}</td>
+                                <td>
+                                    <span class="badge {{ ($c->meeting_provider ?? 'external') === 'jitsi' ? 'text-bg-primary' : 'text-bg-dark' }}">
+                                        {{ ($c->meeting_provider ?? 'external') === 'jitsi' ? 'Built-in' : 'External' }}
+                                    </span>
+                                </td>
                                 <td>{{ $c->starts_at?->format('d-m-Y H:i') ?? '-' }}</td>
                                 <td>
                                     <span class="badge {{ $c->is_published ? 'text-bg-success' : 'text-bg-secondary' }}">
@@ -36,6 +42,11 @@
                                     </span>
                                 </td>
                                 <td class="text-end">
+                                    @if (($c->meeting_provider ?? 'external') === 'jitsi' && $c->meeting_room)
+                                        <a class="btn btn-sm btn-outline-success" href="{{ route('admin.live-classes.start', $c) }}">Start</a>
+                                    @else
+                                        <a class="btn btn-sm btn-outline-success" href="{{ $c->meetingJoinUrl() }}" target="_blank" rel="noopener">Open</a>
+                                    @endif
                                     <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.live-classes.edit', $c) }}">Edit</a>
                                     <form class="d-inline" method="post" action="{{ route('admin.live-classes.destroy', $c) }}" onsubmit="return confirm('Delete live class?')">
                                         @csrf
@@ -45,7 +56,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="5" class="text-center text-muted py-4">No live classes.</td></tr>
+                            <tr><td colspan="6" class="text-center text-muted py-4">No live classes.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -55,4 +66,3 @@
 
     <div class="mt-3">{{ $classes->links() }}</div>
 @endsection
-

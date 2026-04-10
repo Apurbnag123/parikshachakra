@@ -15,10 +15,18 @@
             --pc-ink:#0b2c5f;
             --pc-amber:#f6a11a;
             --pc-surface:#f4f6f9;
+            --pc-surface-2:#ffffff;
+            --pc-line: rgba(11,44,95,0.12);
         }
         body{
             font-family: 'Outfit', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
             background: var(--pc-surface);
+        }
+        .pc-main{
+            min-height: 100vh;
+            background:
+                radial-gradient(1200px 500px at 30% 0%, rgba(246,161,26,0.10), rgba(246,161,26,0) 60%),
+                radial-gradient(1100px 520px at 90% 10%, rgba(159,210,255,0.16), rgba(159,210,255,0) 62%);
         }
         .pc-topbar{
             background: linear-gradient(135deg, #071a39, #0b2c5f 55%, #071a39);
@@ -28,13 +36,45 @@
             letter-spacing: .4px;
         }
         .pc-card{
-            border: 1px solid rgba(11,44,95,0.12);
+            border: 1px solid var(--pc-line);
             border-radius: 16px;
         }
         .pc-badge{
             background: rgba(246,161,26,0.18);
             color: #5a3a00;
             border: 1px solid rgba(246,161,26,0.35);
+        }
+        .btn{
+            border-radius: 14px;
+            font-weight: 700;
+        }
+        .btn.btn-sm{ border-radius: 12px; }
+        .form-control, .form-select{
+            border-radius: 14px;
+            border-color: rgba(11,44,95,0.14);
+        }
+        .form-control:focus, .form-select:focus{
+            border-color: rgba(246,161,26,0.55);
+            box-shadow: 0 0 0 0.25rem rgba(246,161,26,0.18);
+        }
+        .table{
+            --bs-table-bg: transparent;
+        }
+        .table thead th{
+            font-size: 12px;
+            letter-spacing: .35px;
+            font-weight: 900;
+            color: rgba(7,26,57,0.60);
+            text-transform: uppercase;
+        }
+        .table > :not(caption) > * > *{
+            padding: .75rem .75rem;
+        }
+        .pc-panel{
+            background: var(--pc-surface-2);
+            border: 1px solid var(--pc-line);
+            border-radius: 18px;
+            box-shadow: 0 18px 55px rgba(0,0,0,0.06);
         }
         .nav-pills .nav-link{
             border-radius: 12px;
@@ -52,6 +92,7 @@
         a{ color: var(--pc-ink); }
         .nav-link{ font-weight: 600; }
     </style>
+    @stack('page_css')
 </head>
 <body>
     @auth
@@ -108,10 +149,13 @@
                         <a class="nav-link text-white {{ request()->routeIs('admin.fees.report') ? 'active' : '' }}" href="{{ route('admin.fees.report') }}">Fees Report</a>
                         <a class="nav-link text-white {{ request()->routeIs('admin.notices.*') ? 'active' : '' }}" href="{{ route('admin.notices.index') }}">Notices</a>
                         <a class="nav-link text-white {{ request()->routeIs('admin.live-classes.*') ? 'active' : '' }}" href="{{ route('admin.live-classes.index') }}">Live Classes</a>
+                        <a class="nav-link text-white {{ request()->routeIs('admin.class-resources.*') ? 'active' : '' }}" href="{{ route('admin.class-resources.index') }}">Videos & Notes</a>
                         <a class="nav-link text-white {{ request()->routeIs('admin.results.*') ? 'active' : '' }}" href="{{ route('admin.results.index') }}">Results</a>
                         <a class="nav-link text-white {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}" href="{{ route('admin.contacts.index') }}">Contacts</a>
                     @else
                         <a class="nav-link text-white {{ request()->routeIs('student.dashboard') ? 'active' : '' }}" href="{{ route('student.dashboard') }}">Dashboard</a>
+                        <a class="nav-link text-white {{ request()->routeIs('student.live-classes.*') ? 'active' : '' }}" href="{{ route('student.live-classes.index') }}">Live Classes</a>
+                        <a class="nav-link text-white {{ request()->routeIs('student.class-resources.*') ? 'active' : '' }}" href="{{ route('student.class-resources.index') }}">Videos & Notes</a>
                         <a class="nav-link text-white {{ request()->routeIs('student.profile.*') ? 'active' : '' }}" href="{{ route('student.profile.edit') }}">My Profile</a>
                     @endif
                 </nav>
@@ -127,14 +171,19 @@
         </aside>
 
         <div class="flex-grow-1">
-            <main class="container py-4">
+            <main class="pc-main">
+                <div class="container py-4">
                 @if (session('status'))
                     <div class="alert alert-info" role="alert">{{ session('status') }}</div>
                 @endif
 
                 @yield('content')
+                </div>
             </main>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    @stack('page_js')
 </body>
 </html>

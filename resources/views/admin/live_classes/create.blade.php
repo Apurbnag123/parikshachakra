@@ -31,9 +31,24 @@
                         </select>
                         @error('batch_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Meeting Type</label>
+                        <select id="meeting_provider" class="form-select @error('meeting_provider') is-invalid @enderror" name="meeting_provider">
+                            <option value="external" {{ old('meeting_provider', 'external') === 'external' ? 'selected' : '' }}>External Link</option>
+                            <option value="jitsi" {{ old('meeting_provider') === 'jitsi' ? 'selected' : '' }}>Built-in (Jitsi)</option>
+                        </select>
+                        @error('meeting_provider')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="col-md-8" id="jitsi_fields" style="display:none;">
+                        <label class="form-label fw-semibold">Room Name (optional)</label>
+                        <input id="meeting_room" class="form-control @error('meeting_room') is-invalid @enderror" name="meeting_room" value="{{ old('meeting_room') }}" placeholder="eg: batch-1-maths">
+                        <div class="form-text">Leave blank to auto-generate.</div>
+                        @error('meeting_room')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
                     <div class="col-12">
                         <label class="form-label fw-semibold">Meeting URL</label>
-                        <input class="form-control @error('meeting_url') is-invalid @enderror" name="meeting_url" value="{{ old('meeting_url') }}" required>
+                        <input id="meeting_url" class="form-control @error('meeting_url') is-invalid @enderror" name="meeting_url" value="{{ old('meeting_url') }}">
+                        <div id="meeting_url_help" class="form-text"></div>
                         @error('meeting_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="col-md-6">
@@ -58,5 +73,36 @@
             </form>
         </div>
     </div>
-@endsection
 
+    <script>
+        (function () {
+            const provider = document.getElementById('meeting_provider');
+            const jitsiFields = document.getElementById('jitsi_fields');
+            const room = document.getElementById('meeting_room');
+            const url = document.getElementById('meeting_url');
+            const urlHelp = document.getElementById('meeting_url_help');
+            const jitsiDomain = @json(config('live_classes.jitsi_domain', 'meet.jit.si'));
+
+            function sync() {
+                const isJitsi = provider.value === 'jitsi';
+                jitsiFields.style.display = isJitsi ? '' : 'none';
+                url.required = !isJitsi;
+
+                if (isJitsi) {
+                    url.readOnly = true;
+                    urlHelp.textContent = 'Built-in live class will run inside your website using Jitsi.';
+
+                    const roomName = (room.value || '').trim();
+                    url.value = roomName ? `https://${jitsiDomain}/${roomName}` : '';
+                } else {
+                    url.readOnly = false;
+                    urlHelp.textContent = 'Paste Zoom/Google Meet/any external meeting link.';
+                }
+            }
+
+            provider.addEventListener('change', sync);
+            if (room) room.addEventListener('input', sync);
+            sync();
+        })();
+    </script>
+@endsection

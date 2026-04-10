@@ -45,7 +45,7 @@
 
         .banner{
             height: 100vh;
-            background: url('images/coaching.jpg') no-repeat center center/cover;
+            background: url('{{ asset('images/coaching.jpg') }}') no-repeat center center/cover;
             position: relative;
             display: flex;
             justify-content: center;
@@ -204,7 +204,7 @@
             color:#0b2c5f;
             margin-right:10px;
         }
-#i{
+.pc-stat{
     font-size: 20px;
     color: darkgreen;
     text-align: center;
@@ -414,7 +414,7 @@
         .pc-social-btn:hover{
             transform: translateY(-2px);
         }
-        .pc-footer #o{
+        .pc-footer .pc-social-icon{
             margin-top: 0;
             margin-left: 0;
             color: var(--pc-ink);
@@ -660,14 +660,17 @@
             padding: 12px 16px;
             box-shadow: 0 16px 45px rgba(246,161,26,0.20);
         }
-        #o{
+        .pc-social-icon{
             font-size: 24px;
-            color: blue;
             text-align: center;
             margin-top: 13px;
             font-weight: bold;
             margin-left: 5px;
-
+            transition: transform 160ms ease, color 160ms ease;
+        }
+        .pc-social-icon:hover{
+            color: var(--pc-amber);
+            transform: translateY(-2px);
         }
 
         /* Responsive overrides (desktop styles remain unchanged) */
@@ -824,7 +827,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
         <div class="container">
             <a class="navbar-brand text-white fw-bold d-flex align-items-center gap-2" href="#home">
-                <img class="pc-brand-logo" src="images/logo.png" alt="ParikshaChakra Logo">
+                <img class="pc-brand-logo" src="{{ asset('images/logo.png') }}" alt="ParikshaChakra Logo">
                 <span class="d-none d-sm-inline" style="letter-spacing:.6px;">PARIKSHA CHAKRA</span>
             </a>
 
@@ -845,7 +848,7 @@
 
             <div class="d-flex gap-2">
                 <a href="{{ route('login') }}" class="btn btn-outline-light rounded-pill px-4">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-warning rounded-pill px-4 fw-bold" style="background: linear-gradient(135deg, var(--pc-amber), #ffcc6a); border: 0;">Register</a>
+                <a href="{{ route('student.register') }}" class="btn btn-warning rounded-pill px-4 fw-bold" style="background: linear-gradient(135deg, var(--pc-amber), #ffcc6a); border: 0;">Register</a>
             </div>
         </div>
     </nav>
@@ -856,7 +859,7 @@
                 <h1>Welcome To ParikshaChakra, Competition Classes</h1>
                 <p>Learn boldly. Live to inspire.</p>
                 <div class="btns">
-                    <a class="btn1" href="{{ route('register') }}">Register Now</a>
+                    <a class="btn1" href="{{ route('student.register') }}">Register Now</a>
                     <a class="btn2" href="#coaching">Explore Courses</a>
                 </div>
             </div>
@@ -867,16 +870,16 @@
         <h2 class="pc-section-title text-center mb-4">Our Coaching</h2>
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-2 py-4" id="i">
+            <div class="col-2 py-4 pc-stat">
                 <label>10+<br>Expert Teachers</label>
             </div>
-            <div class="col-2 py-4" id="i">
+            <div class="col-2 py-4 pc-stat">
                 <label>100%<br>Job Assurance</label>
             </div>
-            <div class="col-2 py-4" id="i">
+            <div class="col-2 py-4 pc-stat">
                 <label><i class="fa fa-laptop"></i><br>Live Classes</label>
             </div>
-            <div class="col-2 py-4" id="i">
+            <div class="col-2 py-4 pc-stat">
                 <label><i class="fa fa-book"></i><br>Daily Notes</label>
             </div>
             <div class="col-2"></div>
@@ -884,10 +887,10 @@
     </div>
 
     <div class="about" id="about">
-       <div class="row">
+           <div class="row">
            <div class="col-6">
-               <img src="images/himanshu.jpeg" style="height: 400px; width: 400px; display: flex; position: relative; border-radius: 20px; border: 10px solid black; margin-top: 100px; margin-left: 100px;">
-               <img src="images/logo.png" style="height: 300px; width: 300px; display: flex; position: absolute; margin-left: 320px; margin-top: -200px; z-index: 1; background-color: black; border-radius: 20px; border: 10px solid white;">
+               <img src="{{ asset('images/himanshu.jpeg') }}" style="height: 400px; width: 400px; display: flex; position: relative; border-radius: 20px; border: 10px solid black; margin-top: 100px; margin-left: 100px;">
+               <img src="{{ asset('images/logo.png') }}" style="height: 300px; width: 300px; display: flex; position: absolute; margin-left: 320px; margin-top: -200px; z-index: 1; background-color: black; border-radius: 20px; border: 10px solid white;">
            </div>
            <div class="col-6">
                <h2 class="pc-section-title text-center mt-5 mb-3">About Coaching</h2>
@@ -923,7 +926,7 @@
                            <li style="color: black;">Your satisfaction is our top priority.</li>
                            <li style="color: black;">Ensuring lasting beauty and durability.</li>
                        </ul>
-                       <a href="javascript:void(0)" class="btn btn-danger rounded-pill px-4 fw-bold mt-3" style="box-shadow: 0 12px 30px rgba(220,53,69,0.25);">Read More</a>
+                        <a href="#gallery" class="btn btn-danger rounded-pill px-4 fw-bold mt-3" style="box-shadow: 0 12px 30px rgba(220,53,69,0.25);">Read More</a>
 
                    </div>
                </div>
@@ -946,7 +949,7 @@
                     <div class="swiper-slide">
                         <div class="card">
                             <div class="card-top"></div>
-                            <img src="images/himanshu.jpeg">
+                            <img src="{{ asset('images/himanshu.jpeg') }}">
                             <div class="card-body">
                                 <h3>Mr_Himanshu Kumar Nag</h3>
                                 <p>Director</p>
@@ -965,7 +968,7 @@
                     <div class="swiper-slide">
                         <div class="card">
                             <div class="card-top"></div>
-                            <img src="images/vishal.jpeg">
+                            <img src="{{ asset('images/vishal.jpeg') }}">
                             <div class="card-body">
                                 <h3>Mr_Vishal vishnoi</h3>
                                 <p>Teacher</p>
@@ -984,7 +987,7 @@
                     <div class="swiper-slide">
                         <div class="card">
                             <div class="card-top"></div>
-                            <img src="images/priyanka.jpeg">
+                            <img src="{{ asset('images/priyanka.jpeg') }}">
                             <div class="card-body">
                                 <h3>Mrs_Preeti mam</h3>
                                 <p>Teacher</p>
@@ -1003,7 +1006,7 @@
                     <div class="swiper-slide">
                         <div class="card">
                             <div class="card-top"></div>
-                            <img src="images/nitin.jpeg">
+                            <img src="{{ asset('images/nitin.jpeg') }}">
                             <div class="card-body">
                                 <h3>Mr_Nitin Saini</h3>
                                 <p>Teacher</p>
@@ -1039,35 +1042,35 @@
 
         <div class="pc-gallery-grid">
             <div class="pc-gallery-tile span-6 row-2" style="--h: 360px;">
-                <img src="images/coaching.jpg" alt="Gallery photo 1">
+                <img src="{{ asset('images/coaching.jpg') }}" alt="Gallery photo 1">
                 <div class="pc-gallery-meta">
                     <p class="t">Classroom</p>
                     <span class="tag"><i class="fa fa-book me-1"></i>Study</span>
                 </div>
             </div>
             <div class="pc-gallery-tile span-3" style="--h: 170px;">
-                <img src="images/coaching.jpg" alt="Gallery photo 2">
+                <img src="{{ asset('images/coaching.jpg') }}" alt="Gallery photo 2">
                 <div class="pc-gallery-meta">
                     <p class="t">Notes</p>
                     <span class="tag"><i class="fa fa-pencil me-1"></i>Daily</span>
                 </div>
             </div>
             <div class="pc-gallery-tile span-3" style="--h: 170px;">
-                <img src="images/coaching.jpg" alt="Gallery photo 3">
+                <img src="{{ asset('images/coaching.jpg') }}" alt="Gallery photo 3">
                 <div class="pc-gallery-meta">
                     <p class="t">Live Class</p>
                     <span class="tag"><i class="fa fa-laptop me-1"></i>Live</span>
                 </div>
             </div>
             <div class="pc-gallery-tile span-3" style="--h: 210px;">
-                <img src="images/coaching.jpg" alt="Gallery photo 4">
+                <img src="{{ asset('images/coaching.jpg') }}" alt="Gallery photo 4">
                 <div class="pc-gallery-meta">
                     <p class="t">Mentors</p>
                     <span class="tag"><i class="fa fa-users me-1"></i>Team</span>
                 </div>
             </div>
             <div class="pc-gallery-tile span-3" style="--h: 210px;">
-                <img src="images/coaching.jpg" alt="Gallery photo 5">
+                <img src="{{ asset('images/coaching.jpg') }}" alt="Gallery photo 5">
                 <div class="pc-gallery-meta">
                     <p class="t">Practice</p>
                     <span class="tag"><i class="fa fa-clock-o me-1"></i>Routine</span>
@@ -1098,7 +1101,7 @@
                 <div class="pc-contact-card pc-contact-sticker h-100">
                     <div class="pc-sticker-inner">
                         <div class="pc-sticker-mark"><i class="fa fa-comments-o"></i></div>
-                        <img src="images/logo.png" class="pc-sticker-logo" alt="ParikshaChakra Logo">
+                        <img src="{{ asset('images/logo.png') }}" class="pc-sticker-logo" alt="ParikshaChakra Logo">
                         <h3 class="pc-sticker-title">Ask Anything</h3>
                         <p class="pc-sticker-sub">Admissions, courses, fees, or guidance. Send a message.</p>
                     </div>
@@ -1150,14 +1153,14 @@
         <div class="container py-5">
             <div class="pc-footer-card">
                 <div class="pc-footer-topline">
-                    <img src="images/logo.png" class="pc-footer-logo" alt="ParikshaChakra Logo">
+                    <img src="{{ asset('images/logo.png') }}" class="pc-footer-logo" alt="ParikshaChakra Logo">
                     <div class="pc-footer-links-inline" aria-label="Footer links">
                         <a href="#home">Home</a>
                         <a href="#about">About</a>
                         <a href="#gallery">Gallery</a>
                         <a href="#contact">Contact</a>
                         <a href="#teacher">Teacher</a>
-                        <a href="javascript:void(0)">Notes</a>
+                        <a href="{{ route('login') }}">Student Portal</a>
                     </div>
                 </div>
 
@@ -1168,10 +1171,10 @@
                         <p>Address- Moh Bhavaniram NaharKothi Jalaun 285123</p>
                     </div>
                     <div class="pc-footer-social" aria-label="Social links">
-                        <div class="pc-social-btn"><i class="fa fa-facebook" id="o"></i></div>
-                        <div class="pc-social-btn"><i class="fa fa-whatsapp" id="o"></i></div>
-                        <div class="pc-social-btn"><i class="fa fa-instagram" id="o"></i></div>
-                        <div class="pc-social-btn"><i class="fa fa-twitter" id="o"></i></div>
+                        <div class="pc-social-btn"><i class="fa fa-facebook pc-social-icon"></i></div>
+                        <div class="pc-social-btn"><i class="fa fa-whatsapp pc-social-icon"></i></div>
+                        <div class="pc-social-btn"><i class="fa fa-instagram pc-social-icon"></i></div>
+                        <div class="pc-social-btn"><i class="fa fa-twitter pc-social-icon"></i></div>
                     </div>
                 </div>
 
@@ -1186,36 +1189,27 @@
     </div>
 </div>
 </div>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (!window.Swiper) return;
 
-        document.addEventListener("DOMContentLoaded", function () {
-        var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 3,
-        spaceBetween: 30,
-        loop: true,
-        slidesPerGroup: 1,
-        breakpoints: {
-            0: {
-                slidesPerView: 1,
-                spaceBetween: 16,
+        new Swiper(".mySwiper", {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            loop: true,
+            slidesPerGroup: 1,
+            breakpoints: {
+                0: { slidesPerView: 1, spaceBetween: 16 },
+                768: { slidesPerView: 2, spaceBetween: 24 },
+                992: { slidesPerView: 3, spaceBetween: 30 },
             },
-            768: {
-                slidesPerView: 2,
-                spaceBetween: 24,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
             },
-            992: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-            },
-        },
-
-        navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
-    });
+        });
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</body>
 </html>

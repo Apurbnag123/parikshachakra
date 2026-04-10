@@ -43,7 +43,6 @@ Route::middleware(['auth', 'role:admin'])
     ->name('admin.')
     ->group(function () {
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('students', AdminStudentController::class)->except(['show']);
         Route::resource('batches', AdminBatchController::class)->except(['show']);
@@ -72,7 +71,6 @@ Route::middleware(['auth', 'role:student'])
     ->name('student.')
     ->group(function () {
         Route::get('/', [StudentDashboardController::class, 'index'])->name('dashboard');
-        Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/live-classes', [StudentLiveClassController::class, 'index'])->name('live-classes.index');
         Route::get('/live-classes/{liveClass}/join', [StudentLiveClassController::class, 'join'])->name('live-classes.join');
